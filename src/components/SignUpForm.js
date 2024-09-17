@@ -1,14 +1,16 @@
 import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import validate from '../utils/validate'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword ,updateProfile} from 'firebase/auth'
 import { auth } from '../utils/firebase'
 import Spinner from './Spinner'
+import { useNavigate } from 'react-router-dom'
+import DefaultUserProfile from "../assets/netflixUser.jpg"
 const SignUpForm = () => {
   const emailPhoneRef = useRef()
   const passwordRef = useRef()
   const confirmPasswordRef = useRef()
-  const [user,setUser]=useState(null)
+  const navigate=useNavigate()
   const [error, setError] = useState({
     emailPhone: '',
     password: '',
@@ -28,12 +30,16 @@ const SignUpForm = () => {
     // Validate inputs
     const validatedError = validate(emailPhone, password, confirmPassword)
     setError(validatedError)
-
+     
     if (Object.keys(validatedError).length === 0) {
       await createUserWithEmailAndPassword(auth,emailPhone,password)
       .then((userCredentials)=>{
-          setUser(userCredentials.user)
+          
           setAuthError('')
+          updateProfile(auth.currentUser,{
+            photoURL:DefaultUserProfile
+          })
+          .catch((error)=>console.log(error))
           setLoading(false)
       })
       .catch((error)=>{
@@ -44,6 +50,9 @@ const SignUpForm = () => {
         setLoading(false)
       })
 
+    }
+    else{
+      setLoading(false)
     }
   }
 
@@ -82,7 +91,7 @@ const SignUpForm = () => {
 
 
         <button
-          className="bg-[#E50914] h-[50px] text-lg rounded-md text-white font-semibold w-full flex items-center justify-center disabled:bg-red-700"
+          className="bg-[#E50914] py-3 text-lg rounded-md text-white font-semibold w-full flex items-center justify-center disabled:bg-red-700"
           onClick={handleSignUp}
           disabled={loading}
         >

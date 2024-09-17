@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import validate from '../utils/validate'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../utils/firebase'
+
 import Spinner from './Spinner'
 const LoginForm = () => {
   const emailPhoneRef = useRef()
@@ -15,7 +16,9 @@ const LoginForm = () => {
     
   })
 
-  const [user,setUser]=useState(null)
+  const navigate=useNavigate()
+
+
   const handleLogIn =async (e) => {
     e.preventDefault()
 
@@ -23,7 +26,7 @@ const LoginForm = () => {
     const emailPhone = emailPhoneRef.current?.value || ''
     const password = passwordRef.current?.value || ''
  
-
+     
     // Validate inputs
     const validatedError = validate(emailPhone, password)
     setError(validatedError)
@@ -31,9 +34,10 @@ const LoginForm = () => {
     if (Object.keys(validatedError).length === 0) {
        try {
          const userCredentails=await signInWithEmailAndPassword(auth,emailPhone,password)
-         await setUser(userCredentails.user)
+         
          setAuthError('')
          setLoading(false)
+       
         
        } catch (error) {
           
@@ -44,6 +48,9 @@ const LoginForm = () => {
           setLoading(false)
        }
 
+    }
+    else{
+      setLoading(false)
     }
     
   }
