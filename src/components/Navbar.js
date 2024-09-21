@@ -1,4 +1,4 @@
-import React, { useEffect ,useState} from "react";
+import React, { useEffect ,useState,useRef} from "react";
 import Logo from "../assets/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "firebase/auth";
@@ -11,9 +11,10 @@ import { motion,useAnimationControls } from "framer-motion";
 import Netflix from "../assets/N.png"
 const Navbar = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const control=useAnimationControls()
+ 
+  const dispatch=useDispatch()
   const [showOptions,setShowOptions]=useState(false)
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -27,6 +28,10 @@ const Navbar = () => {
 
     return () => unsubscribe();
   }, []);
+
+
+
+
 
   const user = useSelector((store) => store.auth.user);
 
@@ -47,7 +52,7 @@ const Navbar = () => {
 
 
   return (
-    <div className="fixed top-0 left-0 flex items-center w-full  h-[80px]   px-5 py-5 md:px-20 sm:px-10 bg-gradient-to-b from-black to-transparent justify-between z-50">
+    <div className="fixed top-0 left-0  right-0 flex items-center w-full  h-[80px]   px-5 py-5 md:px-20 sm:px-10 bg-gradient-to-b from-black to-transparent justify-between z-[100]" >
         
 
       <div className="flex items-center gap-5"> 
