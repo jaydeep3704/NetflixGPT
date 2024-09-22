@@ -2,19 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+
+
+
+
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
- /* Hide scrollbar for IE, Edge and Firefox */
+  /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
+    -ms-overflow-style: none;  /* IE and Edge */
       scrollbar-width: none;  /* Firefox */
-}
-}
+    }}
 *{
   margin: 0;
   padding: 0;
 }
 
+
+
+@layer components {
+  /* Use a more specific selector to override Swiper's default styles */
+  .mySwiper .swiper-button-prev,
+  .mySwiper .swiper-button-next {
+  
+  color: #fff;
+  width: 72px;
+  height: 100%;
+  top: 0;
+  margin-top: 0;
+
+  }
+
+
+
+  .mySwiper .swiper-button-prev:hover::after,
+  .mySwiper.swiper-button-next:hover::after {
+    transition: 0.3s;
+    transform: scale(1.2);
+  }
+  
+  .mySwiper .swiper:hover .swiper-button-prev:not(.swiper-button-disabled),
+  .mySwiper .swiper:hover .swiper-button-next:not(.swiper-button-disabled) {
+    display: flex;
+  }
+  
+  
+  
+  .mySwiper .swiper-button-prev {
+    left: 0;
+  }
+  
+  .mySwiper .swiper-button-prev:hover {
+   @apply left-0 bg-gradient-to-r from-black 
+  }
+  
+  .mySwiper .swiper-button-next {
+    right: 0;
+  }
+  
+  .mySwiper .swiper-button-next:hover {
+    @apply right-0 bg-gradient-to-l from-black 
+  }
+  
+
+
+
+
+}

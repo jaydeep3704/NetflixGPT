@@ -14,7 +14,7 @@ const Navbar = () => {
  
   const dispatch=useDispatch()
   const [showOptions,setShowOptions]=useState(false)
-
+ const [scroll,setScroll]=useState(null)
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -28,6 +28,17 @@ const Navbar = () => {
 
     return () => unsubscribe();
   }, []);
+
+
+  const handleScroll=(e)=>{
+   setScroll(window.scrollY)
+  }
+
+
+
+  useEffect(()=>{
+    window.addEventListener('scroll',handleScroll)
+  },[scroll])
 
 
 
@@ -52,7 +63,8 @@ const Navbar = () => {
 
 
   return (
-    <div className="fixed top-0 left-0  right-0 flex items-center w-full  h-[80px]   px-5 py-5 md:px-20 sm:px-10 bg-gradient-to-b from-black to-transparent justify-between z-[100]" >
+    <div className={`fixed top-0 left-0  right-0 flex items-center w-full  h-[80px]   px-5 py-5 md:px-20 sm:px-10 bg-gradient-to-b from-black to-transparent justify-between z-[100] 
+     transition duration-150 ease-in-out ${scroll>300 && 'bg-[#141414]'}`} >
         
 
       <div className="flex items-center gap-5"> 
@@ -62,7 +74,7 @@ const Navbar = () => {
             <img src={Netflix} alt="" className="h-10 md:hidden" />
         </div>
         {/* Links  */}
-        {user && <div className="hidden md:block">
+        {user && <div className="hidden lg:block">
             <ul className="flex gap-5 text-lg text-white">
               <li>Home</li>
               <li>TV Series</li>

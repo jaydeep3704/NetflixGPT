@@ -8,6 +8,7 @@ import SecondaryContainer from '../components/SecondaryContainer'
 import usePopularMovies from '../hooks/usePopularMovies'
 import useTopRatedMovies from '../hooks/useTopRatedMovies'
 import useUpcomingMovies from '../hooks/useUpcomingMovies'
+
 const Browse = () => {
 
   const user=useSelector((store)=>store.auth.user)
@@ -16,6 +17,7 @@ const Browse = () => {
   usePopularMovies()
   useTopRatedMovies()
   useUpcomingMovies()
+  
 
   useEffect(()=>{
     if(!user)
